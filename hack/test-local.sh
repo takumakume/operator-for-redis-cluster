@@ -35,7 +35,7 @@ until helm install -n operator --set image.tag=$TAG chart/redis-operator; do sle
 echo
 
 printf "Waiting for redis-operator deployment to complete."
-until [ $(kubectl get deployment operator-redis-operator -ojsonpath="{.status.conditions[?(@.type=='Available')].status}") == "True" ] > /dev/null 2>&1; do sleep 1; printf "."; done
+until [ $(kubectl get deployment operator-operator-for-redis -ojsonpath="{.status.conditions[?(@.type=='Available')].status}") == "True" ] > /dev/null 2>&1; do sleep 1; printf "."; done
 echo
 
 echo "[[[ Run End2end test ]]] "
