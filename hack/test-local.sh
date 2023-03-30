@@ -31,7 +31,7 @@ echo "create RBAC for rediscluster"
 #kubectl create -f $GIT_ROOT/examples/RedisCluster_RBAC.yaml
 
 printf  "create and install the redis operator in a dedicate namespace"
-until helm install -n operator --set image.tag=$TAG chart/redis-operator; do sleep 1; printf "."; done
+until helm install operator --set image.tag=$TAG charts/operator-for-redis; do sleep 1; printf "."; done
 echo
 
 printf "Waiting for redis-operator deployment to complete."
