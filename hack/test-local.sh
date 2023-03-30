@@ -9,15 +9,6 @@ minikube start
 echo "Create the missing rolebinding for k8s dashboard"
 kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
 
-echo "Init the helm tiller"
-kubectl -n kube-system create sa tiller
-kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
-helm init --service-account tiller
-
-printf "Waiting for tiller deployment to complete."
-until [ $(kubectl get deployment -n kube-system tiller-deploy -ojsonpath="{.status.conditions[?(@.type=='Available')].status}") == "True" ] > /dev/null 2>&1; do sleep 1; printf "."; done
-echo
-
 eval $(minikube docker-env)
 echo "Install the redis-cluster operator"
 
