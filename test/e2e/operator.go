@@ -45,7 +45,7 @@ var _ = Describe("RedisCluster CRUD operations", func() {
 
 		Eventually(framework.CreateRedisClusterConfigMapFunc(kubeClient, cluster), "5s", "1s").ShouldNot(HaveOccurred())
 
-		Eventually(framework.IsPodDisruptionBudgetCreatedFunc(kubeClient, cluster), "5s", "1s").ShouldNot(HaveOccurred())
+		Eventually(framework.IsPodDisruptionBudgetCreatedFunc(kubeClient, cluster, int32(5)), "5s", "1s").ShouldNot(HaveOccurred())
 
 		Eventually(framework.IsRedisClusterStartedFunc(kubeClient, cluster), "8m", "5s").ShouldNot(HaveOccurred())
 
@@ -70,7 +70,7 @@ lazyfree-lazy-expire yes`,
 			Eventually(framework.GetConfigUpdateEventFunc(kubeClient, cluster), "5s", "1s").ShouldNot(HaveOccurred())
 		})
 		It("should update the RedisCluster", func() {
-			newTag := "new"
+			newTag := "0.3.14"
 			cluster = framework.NewRedisCluster(clusterName, clusterNs, newTag, defaultPrimaries, defaultReplicas)
 
 			Eventually(framework.UpdateRedisClusterFunc(kubeClient, cluster), "5s", "1s").ShouldNot(HaveOccurred())
@@ -86,6 +86,8 @@ lazyfree-lazy-expire yes`,
 			Eventually(framework.UpdateConfigRedisClusterFunc(kubeClient, cluster, &nbPrimary, nil), "5s", "1s").ShouldNot(HaveOccurred())
 
 			Eventually(framework.IsRedisClusterStartedFunc(kubeClient, cluster), "5m", "5s").ShouldNot(HaveOccurred())
+
+			Eventually(framework.IsPodDisruptionBudgetCreatedFunc(kubeClient, cluster, int32(7)), "5s", "1s").ShouldNot(HaveOccurred())
 
 			Eventually(framework.ZonesBalancedFunc(kubeClient, cluster), "10s", "1s").ShouldNot(HaveOccurred())
 		})
