@@ -136,16 +136,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        kubernetes-version: ["1.25", "1.24", "1.23", "1.22"]
+        kubernetes-version: ["1.26", "1.25", "1.24", "1.23"]
         include:
+          - kubernetes-version: "1.26"
+            kind-node: kindest/node:v1.26.3@sha256:94eb63275ad6305210041cdb5aca87c8562cc50fa152dbec3fef8c58479db4ff
           - kubernetes-version: "1.25"
-            kind-node: kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1
+            kind-node: kindest/node:v1.25.8@sha256:b5ce984f5651f44457edf263c1fe93459df8d5d63db7f108ccf5ea4b8d4d9820
           - kubernetes-version: "1.24"
-            kind-node: kindest/node:v1.24.7@sha256:577c630ce8e509131eab1aea12c022190978dd2f745aac5eb1fe65c0807eb315
+            kind-node: kindest/node:v1.24.12@sha256:0bdca26bd7fe65c823640b14253ea7bac4baad9336b332c94850f84d8102f873
           - kubernetes-version: "1.23"
-            kind-node: kindest/node:v1.23.13@sha256:ef453bb7c79f0e3caba88d2067d4196f427794086a7d0df8df4f019d5e336b61
-          - kubernetes-version: "1.22"
-            kind-node: kindest/node:v1.22.15@sha256:7d9708c4b0873f0fe2e171e2b1b7f45ae89482617778c1c875f1053d4cef2e41
+            kind-node: kindest/node:v1.23.17@sha256:f935044f60483d33648d8c13decd79557cf3e916363a3c9ba7e82332cb249cba
+#          - kubernetes-version: "1.22"
+#            kind-node: kindest/node:v1.22.17@sha256:ed0f6a1cd1dcc0ff8b66257b3867e4c9e6a54adeb9ca31005f62638ad555315c
 #          - kubernetes-version: "1.21"
 #            kind-node: kindest/node:v1.21.1@sha256:69860bda5563ac81e3c0057d654b5253219618a22ec3a346306239bba8cfa1a6
 #          - kubernetes-version: "1.20"
