@@ -1,7 +1,8 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
   name: {{ include "node-for-redis.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels: {{- include "node-for-redis.labels" . | nindent 4 }}
 rules:
 - apiGroups: [""]
@@ -12,13 +13,14 @@ rules:
   verbs: ["list", "get", "watch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: {{ include "node-for-redis.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels: {{- include "node-for-redis.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  kind: Role
   name: {{ include "node-for-redis.fullname" . }}
 subjects:
 - kind: ServiceAccount
